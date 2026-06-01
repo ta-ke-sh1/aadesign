@@ -1,0 +1,55 @@
+import type { DataTableProps } from "./table.types.ts";
+import { DataTable } from "mantine-datatable";
+import { useEffect, useState } from "react";
+import sortBy from "lodash/sortBy";
+
+const PAGE_SIZE = 15;
+
+export default function CommonTable({ data, columns, height, rowExpansion }: DataTableProps) {
+    const [sortStatus, setSortStatus] = useState<any>({
+        direction: "desc",
+    });
+
+    const [page, setPage] = useState(1);
+
+    const [records, setRecords] = useState(sortBy(data, "id"));
+
+    useEffect(() => {
+        const inputData = sortBy(data, sortStatus.columnAccessor);
+
+        const from = (page - 1) * PAGE_SIZE;
+        const to = from + PAGE_SIZE;
+
+        const initialData =
+            sortStatus.direction === "asc" ? inputData.reverse() : inputData;
+
+        setRecords(initialData.slice(from, to));
+    }, [sortStatus, data, page]);
+
+
+    // Data change -> Page return back to 1
+    useEffect(() => {
+        setPage(1)
+    }, [data])
+
+    return (
+        <DataTable
+            height={height ?? "70dvh"}
+            style={{
+                width: "100%",
+            }}
+            rowExpansion={rowExpansion}
+            sortStatus={sortStatus}
+            onSortStatusChange={setSortStatus}
+            withTableBorder
+            borderRadius="sm"
+            totalRecords={data.length}
+            recordsPerPage={PAGE_SIZE}
+            page={page}
+            onPageChange={(p) => setPage(p)}
+            highlightOnHover
+            columns={columns}
+            records={records}
+        />
+    );
+}
