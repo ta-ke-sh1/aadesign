@@ -1,0 +1,13 @@
+.heading-title {
+  font-family: "Bricolage Grotesque", Bricolage, sans-serif;
+  line-height: 3.8rem;
+  font-size: 4rem;
+  user-select: none;
+  text-align: center;
+
+  .heading-active {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+

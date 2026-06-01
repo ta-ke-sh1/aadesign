@@ -4,12 +4,13 @@ import {createBrowserRouter, RouterProvider} from "react-router";
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
 import "@mantine/dates/styles.css";
-import "./app.scss";
+import "./styles/app.scss";
+import "./styles/headings.scss"
 
 import "mantine-datatable/styles.layer.css";
 
 import "@fontsource/space-mono/400.css";
-import "@fontsource/bricolage-grotesque/600.css";
+import "@fontsource/bricolage-grotesque/200.css";
 
 import {Notifications} from "@mantine/notifications";
 import {ModalsProvider} from "@mantine/modals";
@@ -19,6 +20,7 @@ import NotificationWrapper from "./components/wrapper/notification.wrapper.tsx";
 import ProtectedWrapper from "./components/wrapper/protected.wrapper.tsx";
 import {ROLES} from "./enums/auth.ts";
 import DetailsLayout from "./layouts/authenticated/details/details.layout.tsx";
+import NavigationBar from "./components/navigator/navigator.tsx";
 
 export default function App() {
     const router = createBrowserRouter([
@@ -49,6 +51,7 @@ export default function App() {
             <Notifications/>
             <ModalsProvider>
                 <NotificationWrapper>
+                    <NavigationBar />
                     <RouterProvider router={router}/>
                 </NotificationWrapper>
             </ModalsProvider>
